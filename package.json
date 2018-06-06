@@ -1,16 +1,41 @@
 {
-  "name": "jitsi-meet-electron",
-  "version": "0.0.0",
-  "description": "Electron application for Jitsi Meet",
+  "name": "Kaaryin-Meet",
+  "version": "1.0.0",
+  "description": "Desktop application for Kaaryin-Meet",
   "main": "build/main.js",
-  "productName": "Jitsi Meet",
+  "productName": "Kaaryin-Meet",
   "scripts": {
     "start": "webpack --config ./webpack.config.js --mode development && electron ./build/main.js",
     "clean": "rm -rf node_modules",
     "lint": "eslint . && flow",
     "pack": "webpack --config ./webpack.config.js --mode production && electron-packager .",
     "postinstall": "electron-rebuild",
-    "validate": "npm ls"
+    "validate": "npm ls",
+    "dist": "build -w --x64 --ia32"
+  },
+  "build": {
+    "appId": "im.kaaryin-meet.app",
+    "asar": "true",
+    "icon": "build/icon.ico",
+    "files": [
+      "node_modules/**",
+      "build/**",
+      "app/**"
+    ],
+    "linux": {
+      "target": "deb",
+      "category": "Network;InstantMessaging;Chat",
+      "maintainer": ""
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "protocols": {
+    "name": "kaaryin-meet",
+    "schemes": [
+      "kaaryin-meet"
+    ]
   },
   "pre-commit": [
     "lint"
@@ -24,48 +49,41 @@
     "webrtc",
     "xmpp",
     "electron",
-    "jitsi-meet"
+    "Kaaryin-Meet"
   ],
   "author": "",
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
-    "@atlaskit/button": "7.2.5",
-    "@atlaskit/css-reset": "2.0.2",
-    "@atlaskit/field-text": "5.1.0",
-    "@atlaskit/theme": "3.2.2",
     "electron-is-dev": "0.3.0",
-    "history": "4.7.2",
-    "jitsi-meet-electron-utils": "jitsi/jitsi-meet-electron-utils",
+    "jitsi-meet-electron-utils": "file:../jitsi-meet-electron-utils",
     "react": "16.3.2",
     "react-dom": "16.3.2",
-    "react-redux": "5.0.7",
-    "react-router-redux": "5.0.0-alpha.9",
-    "redux": "4.0.0",
-    "redux-logger": "3.0.6",
-    "styled-components": "3.3.0"
+    "postis": "^2.2.0",
+    "robotjs": "^0.5.1"
   },
   "devDependencies": {
+    "asar-electron-builder": "^0.14.2",
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.3",
     "babel-loader": "7.1.4",
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
-    "babel-preset-stage-1": "6.24.1",
-    "css-loader": "0.28.11",
     "electron": "2.0.0",
+    "electron-builder": "^20.15.1",
     "electron-packager": "12.0.2",
     "electron-rebuild": "1.7.3",
     "eslint": "4.12.1",
-    "eslint-config-jitsi": "jitsi/eslint-config-jitsi",
+    "eslint-config-jitsi": "git+https://github.com/jitsi/eslint-config-jitsi.git",
     "eslint-plugin-flowtype": "2.46.3",
     "eslint-plugin-import": "2.11.0",
     "eslint-plugin-jsdoc": "3.2.0",
     "eslint-plugin-react": "7.7.0",
     "flow-bin": "0.72.0",
     "html-webpack-plugin": "3.2.0",
+    "node-loader": "0.6.0",
     "precommit-hook": "3.0.0",
-    "style-loader": "0.21.0",
+    "robotjs": "^0.5.1",
     "webpack": "4.8.1",
     "webpack-cli": "2.1.3"
   }

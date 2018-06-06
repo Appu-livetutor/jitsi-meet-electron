@@ -20,18 +20,14 @@ const commonConfig = {
                             require.resolve('babel-preset-env'),
                             { modules: false }
                         ],
-                        require.resolve('babel-preset-react'),
-                        require.resolve('babel-preset-stage-1')
+                        require.resolve('babel-preset-react')
                     ]
                 },
                 test: /\.js$/
             },
             {
-                use: [
-                    { loader: 'style-loader' },
-                    { loader: 'css-loader' }
-                ],
-                test: /\.css$/
+                use: 'node-loader',
+                test: /\.node$/
             }
         ]
     },

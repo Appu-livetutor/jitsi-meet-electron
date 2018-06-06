@@ -3,6 +3,8 @@
 const electron = require('electron');
 const APP = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const vectorMenu = require('./menu');
+
 
 const isDev = require('electron-is-dev');
 
@@ -43,11 +45,12 @@ const jitsiMeetWindowOptions = {
     height: 600,
     minWidth: 800,
     minHeight: 600,
-    titleBarStyle: 'hidden',
+	titleBarStyle: 'hidden',
     webPreferences: {
         nativeWindowOpen: true
     }
 };
+    electron.Menu.setApplicationMenu(vectorMenu);
 
 /**
  * Sets the APP object listeners.
@@ -65,6 +68,22 @@ function setAPPListeners() {
             createJitsiMeetWindow();
         }
     });
+	electron.app.setAsDefaultProtocolClient('kaaryin-meet')
+
+	// Protocol handler for osx
+APP.on('open-url', function (event, url) {
+  event.preventDefault();
+  log("open-url event: " + url)
+
+  dialog.showErrorBox('open-url', `You arrived from: ${url}`)
+});
+
+APP.on('before-quit', () => {
+    global.appQuitting = true;
+    if (mainWindow) {
+        mainWindow.webContents.send('before-quit');
+    }
+});
     APP.on('certificate-error',
         // eslint-disable-next-line max-params
         (event, webContents, url, error, certificate, callback) => {
