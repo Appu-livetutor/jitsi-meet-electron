@@ -1,9 +1,9 @@
 {
-  "name": "jitsi-meet-electron",
-  "version": "0.0.0",
-  "description": "Electron application for Jitsi Meet",
+  "name": "Kaaryin-Meet",
+  "version": "1.2.0",
+  "description": "Desktop APP for Kaaryin-MeetS",
   "main": "build/main.js",
-  "productName": "Jitsi Meet",
+  "productName": "Kaaryin-Meet",
   "scripts": {
     "start": "webpack --config ./webpack.config.js --mode development && electron ./build/main.js",
     "clean": "rm -rf node_modules",
@@ -11,6 +11,45 @@
     "pack": "webpack --config ./webpack.config.js --mode production && electron-packager .",
     "postinstall": "electron-rebuild",
     "validate": "npm ls"
+	"dist": "build"
+  },
+  "build": {
+    "appId": "im.kaaryin-meet.app",
+    "asar": "true",
+    "icon": "icon.ico",
+    "files": [
+      "node_modules/**",
+      "build/**",
+      "app/**"
+    ],
+	"dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link"
+          }
+      ]
+    },
+    "linux": {
+      "target": "deb",
+      "category": "Network;InstantMessaging;Chat",
+      "maintainer": ""
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "protocols": {
+    "name": "kaaryin-meet",
+    "schemes": [
+      "kaaryin-meet"
+    ]
+  },
   },
   "pre-commit": [
     "lint"
@@ -23,10 +62,10 @@
     "jingle",
     "webrtc",
     "xmpp",
-    "electron",
-    "jitsi-meet"
+    "desktop",
+    "Kaaryin-Meet"
   ],
-  "author": "",
+  "author": "Live-Tutor Solutions",
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {

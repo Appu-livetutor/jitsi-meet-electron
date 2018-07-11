@@ -3,7 +3,7 @@
 const electron = require('electron');
 const APP = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-
+const vectorMenu = require('./menu');
 const isDev = require('electron-is-dev');
 
 const {
@@ -39,8 +39,8 @@ let jitsiMeetWindow = null;
  * Options used when creating the main Jitsi Meet window.
  */
 const jitsiMeetWindowOptions = {
-    width: 800,
-    height: 600,
+    width: 1100,
+    height: 800,
     minWidth: 800,
     minHeight: 600,
     titleBarStyle: 'hidden',
@@ -48,6 +48,7 @@ const jitsiMeetWindowOptions = {
         nativeWindowOpen: true
     }
 };
+    electron.Menu.setApplicationMenu(vectorMenu);
 
 /**
  * Sets the APP object listeners.
@@ -77,7 +78,15 @@ function setAPPListeners() {
         }
     );
 }
+electron.app.setAsDefaultProtocolClient('kaaryin-meet')
 
+	// Protocol handler for osx
+APP.on('open-url', function (event, url) {
+  event.preventDefault();
+  log("open-url event: " + url)
+
+  dialog.showErrorBox('open-url', `You arrived from: ${url}`)
+});
 /**
  * Opens new window with index.html(Jitsi Meet is loaded in iframe there).
  */
